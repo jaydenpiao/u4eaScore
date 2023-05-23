@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        #wordCount {
+            margin-top: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Word Count Tool</h1>
+<textarea id="textInput" rows="10" cols="50" placeholder="Enter text here..."></textarea>
+<button id="countButton">Count Words</button>
+<div id="wordCount"></div>
+<div id="result"></div>
+
+<script>
+    document.getElementById("countButton").onclick = function () {
+        var text = document.getElementById("textInput").value;
+        // convert to lowercase and remove punctuation
+        text = text.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        var words = text.split(/\s+/);
+        var wordCount = words.length;
+
+        // Remove empty strings from array
+        words = words.filter(Boolean);
+
+        var wordFrequency = {};
+        for (var i = 0; i < words.length; i++) {
+            if (wordFrequency[words[i]] == null) {
+                wordFrequency[words[i]] = 1;
+            } else {
+                wordFrequency[words[i]]++;
+            }
+        }
+
+        document.getElementById("wordCount").textContent = "Total Words: " + wordCount;
+        var resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = ""; // clear previous results
+
+        for (var word in wordFrequency) {
+            var p = document.createElement("p");
+            p.textContent = word + ": " + wordFrequency[word];
+            resultDiv.appendChild(p);
+        }
+    }
+</script>
+</body>
+</html>
